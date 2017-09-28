@@ -247,7 +247,12 @@ Normalisation Example: RUVSeq
 
 Latent Factors
 ========================================================
+<img src="fig/cellcycleplot.png" title="cell cycle" width="800px" />
 
+***
+
+* Package scran: assignment of cell cycle phase
+* Package scLVM: removal of latent factors (such as cell cycle effects)
 
 
 (Semi-)Supervised Analysis
@@ -255,17 +260,24 @@ Latent Factors
 - Currently there is no fully automated analysis of biological processes!
   We can map to GO terms, pathways, gene modules and more,
   but the understanding comes from the exchange: Biology <=> Bioinformatics.
-  Be nice to Bioinformaticians (chocolate helps)!
-  
-1. Differential gene expression
+  Be nice to us Bioinformaticians (chocolate helps), you still need us!
+
+## Differential gene expression
   (contrast between pairs of design groups)
   - two-dimensional clustering (heatmap)
   - gene lists via correlation or regression models
 
-
-2. Analysis of the covariance matrix
+## Analysis of the covariance matrix
   - PCA, tSNE
-  - Latent factor analysis (scLVM, scran)
+  - Latent factor analysis (scran, scLVM)
   - Pseudo-time as latent factor (Monocle, Wanderlust, DeLorean)
   - Branching trajectories
+
+
+========================================================
+<img src="fig/heatmap_key.png" title="heatmap" width="650px" />
+<img src="fig/biplot_semisuperv.png" title="biplot" width="500px" />
+<img src="fig/Gbars.Tubb3.cutoff.png" title="gene bars" width="300px" />
+***
+<img src="fig/PCA_KO_1_7x7.png" title="PCA" width="500px" />
 
