@@ -46,7 +46,7 @@ Introduction
 
 ```{r, echo = FALSE}
 dat = read.table(file = "dat/RNA-Seq_pub_stat.dat", header = TRUE);
-barplot(dat$count, names.arg = dat$year, col = "blue");
+barplot(dat$count, names.arg = dat$year, col = "blue", cex.axis = 2.0, cex.names = 2.0);
 ```
 
 <small>
@@ -54,67 +54,194 @@ barplot(dat$count, names.arg = dat$year, col = "blue");
 ```
 Design and computational analysis of single-cell RNA-sequencing experiments.
 Rhonda Bacher and Christina Kendziorski, Genome Biology 17 (2016) 63.
-DOI 10.1186
+```
+```
+The Technology and Biology of Single-Cell RNA Sequencing.
+Kolodziejczyk et al., Molecular Cell 58 (2015) 610.
 ```
 </small>
 
 ***
 
-## Spatio-temporal and Lineage-specific Mapping
+## Lineage-specific Mapping and (Pseudo-)Time Reconstruction
 <img src="fig/Z_A_PCA.png" title="ENS cells" width="800px" />
 
 
-scRNA-Seq Post-processing: Alignment
+RNA-Seq Data Pipeline
 ========================================================
-- Output of scRNA-Seq run: short (50-100 n) transcript reads in fastq files
-- Reference (human, mouse, ) genome or transcriptome: fasta sequence + annotation (UCSC, ENSEMBL, )
-- Alignment of transcript reads with reference genome or transcriptome
-- Hisat2 (genome), STAR (genome), Kallisto (transcriptome), ...
-- Alignment with spike-ins (important for normalisation): create 'spikeIn-ome'
-- Transcript counts created by aligner or second program (featureCounts from the subread package)
-- Gene names in R from org.Hs.eg.db or org.Mm.eg.db library
+## Prerequisites
+* Aligner
+* Reference genome or transcriptome; ERCC92 references
+* Single-cell RNA-Seq transcript reads
+
+## Alignment
+* Align each sample (cell) on cluster or local computer
+* Count transcripts
+* Log alignment success
+* Merge all samples into one result table (transcript counts)
+
+## Quality Check
+* Quality-check all samples
+
+## Normalisation
+* Normalise samples and batches
+
+## Analysis
+* Create PCA and tSNE plots
+* Analyse differential gene expression
 
 
-Quality Control and Normalisation
+Quality Control
 ========================================================
 - Check the distribution of read counts
 - Remove all cells with 'total transcript counts < cut-off'
   (~50000, but other methods might have lower counts)
-- Remove all genes with less than 5 counts in 2 samples
-- Normalise via design matrix to remove batch effects
-- Upper quartile or quantile normalisation (RUVSeq -> DESeq2)
-- In difficult cases, more sophisticated normalisation might be required
+- Remove all genes with less than 5 counts in 5 samples
+- Number of remaining genes >5000?
+- <10% of transcripts map to mitochondrial genes
+
+
+Quality Control Example
+========================================================
+
+
+
+========================================================
+```{r, eval = TRUE, echo = FALSE}
+library(ggplot2);
+## create synthetic expression data for 6 cells
+## number of genes
+g = c(1:8);
+## cells
+c1 = data.frame(rep(1, length(g)), log2(2^g));
+colnames(c1) = c("cell", "expr");
+c2 = data.frame(rep(2, length(g)), log2(2^g) * 1.1);
+colnames(c2) = c("cell", "expr");
+c3 = data.frame(rep(3, length(g)), log2(2^g) * 1.2);
+colnames(c3) = c("cell", "expr");
+c4 = data.frame(rep(4, length(g)), log2(2^g) * 1.7);
+colnames(c4) = c("cell", "expr");
+c5 = data.frame(rep(5, length(g)), log2(2^g) * 1.6);
+colnames(c5) = c("cell", "expr");
+c6 = data.frame(rep(6, length(g)), log2(2^g) * 1.5);
+colnames(c6) = c("cell", "expr");
+
+df = rbind(c1, c2, c3, c4, c5, c6);
+colnames(df) = c("cell", "expr");
+
+ggplot() +
+geom_crossbar(data = df, aes(x = cell, ymin = expr, ymax = expr, y = expr, colour = cell)) +
+ylab("log(expr)") +
+scale_x_continuous(breaks = c(1,2,3,4,5,6), labels = c("cell1", "cell2", "cell3", "cell4", "cell5", "cell6")) +
+ggtitle("Per-sample sequencing depth") +
+  theme(title = element_text(size = 22), axis.text = element_text(size = 18), axis.title = element_text(size = 18));
+```
+
+```{r, eval = TRUE, echo = FALSE}
+library(ggplot2);
+## create synthetic expression data for 6 cells
+## number of genes
+g = c(1:8);
+## cells
+c1 = data.frame(rep(1, length(g)), log2(2^g));
+colnames(c1) = c("cell", "expr");
+c2 = data.frame(rep(2, length(g)), log2(2^g) * 1.1);
+colnames(c2) = c("cell", "expr");
+c3 = data.frame(rep(3, length(g)), log2(2^g) * 1.2);
+colnames(c3) = c("cell", "expr");
+c4 = data.frame(rep(4, length(g)), log2(2^g) * 1.7);
+c4[8, 2] = c4[8, 2] + 2;
+colnames(c4) = c("cell", "expr");
+c5 = data.frame(rep(5, length(g)), log2(2^g) * 1.6);
+c5[8, 2] = c5[8, 2] + 2.5;
+colnames(c5) = c("cell", "expr");
+c6 = data.frame(rep(6, length(g)), log2(2^g) * 1.5);
+c6[8, 2] = c6[8, 2] + 2.5;
+colnames(c6) = c("cell", "expr");
+
+df = rbind(c1, c2, c3, c4, c5, c6);
+colnames(df) = c("cell", "expr");
+
+ggplot() +
+geom_crossbar(data = df, aes(x = cell, ymin = expr, ymax = expr, y = expr, colour = cell)) +
+ylab("log(expr)") +
+scale_x_continuous(breaks = c(1,2,3,4,5,6), labels = c("cell1", "cell2", "cell3", "cell4", "cell5", "cell6")) +
+ggtitle("Differential Gene Expression") +
+theme(title = element_text(size = 22), axis.text = element_text(size = 18), axis.title = element_text(size = 18));
+```
+***
+```{r, eval = TRUE, echo = FALSE}
+library(ggplot2);
+## create synthetic expression data for 6 cells
+## number of genes
+g = c(1:8);
+## cells
+c1 = data.frame(rep(1, length(g)), log2(2^g));
+c1[c(1,2,3,5), 2] = 0;
+colnames(c1) = c("cell", "expr");
+c2 = data.frame(rep(2, length(g)), log2(2^g) * 1.1);
+c2[c(2,3,6), 2] = 0;
+colnames(c2) = c("cell", "expr");
+c3 = data.frame(rep(3, length(g)), log2(2^g) * 1.2);
+c3[c(1,2,4,5), 2] = 0;
+colnames(c3) = c("cell", "expr");
+c4 = data.frame(rep(4, length(g)), log2(2^g) * 1.7);
+c4[c(2,4), 2] = 0;
+c4[8, 2] = c4[8, 2] + 2;
+colnames(c4) = c("cell", "expr");
+c5 = data.frame(rep(5, length(g)), log2(2^g) * 1.6);
+c5[c(1,4,7), 2] = 0;
+c5[8, 2] = c5[8, 2] + 2.5;
+colnames(c5) = c("cell", "expr");
+c6 = data.frame(rep(6, length(g)), log2(2^g) * 1.5);
+c6[c(1,2,3), 2] = 0;
+c6[8, 2] = c6[8, 2] + 2.5;
+colnames(c6) = c("cell", "expr");
+
+df = rbind(c1, c2, c3, c4, c5, c6);
+colnames(df) = c("cell", "expr");
+
+ggplot() +
+geom_crossbar(data = df, aes(x = cell, ymin = expr, ymax = expr, y = expr, colour = cell)) +
+ylab("log(expr)") +
+scale_x_continuous(breaks = c(1,2,3,4,5,6), labels = c("cell1", "cell2", "cell3", "cell4", "cell5", "cell6")) +
+ggtitle("Zero inflation") +
+theme(title = element_text(size = 22), axis.text = element_text(size = 18), axis.title = element_text(size = 18));
+```
+
+<img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
+<small>
+Bacher et al., Nature Methods 14 (2017) 584.
+</small>
+
+
+Normalisation Example
+========================================================
+
+
+
+
+Latent Factors
+========================================================
+
 
 
 (Semi-)Supervised Analysis
 ========================================================
 - Currently there is no fully automated analysis of biological processes!
-  We can map GO terms, pathways, gene modules and more,
-  but the understanding comes from the Biology <=> Bioinformatics exchange.
-  Make a Bioinformatician your friend (chocolate helps, a beer as well).
+  We can map to GO terms, pathways, gene modules and more,
+  but the understanding comes from the exchange: Biology <=> Bioinformatics.
+  Be nice to Bioinformaticians (chocolate helps)!
   
 1. Differential gene expression
   (contrast between pairs of design groups)
-  - two-dimensional clustering
-  - gene lists through correlation or regression models
+  - two-dimensional clustering (heatmap)
+  - gene lists via correlation or regression models
+
+
 2. Analysis of the covariance matrix
-  - PCA, tSNE, SVD
+  - PCA, tSNE
   - Latent factor analysis (scLVM, scran)
   - Pseudo-time as latent factor (Monocle, Wanderlust, DeLorean)
-  - Branching trajectories: software emerging this year
-
-
-Reviews
-========================================================
-- Alignment Methods
-- Normalisation
-- Other
-
-
-Software
-========================================================
-- Aligners
-- Normalisation
-- Latent factor decomposition
-- Pseudo-time modelling
+  - Branching trajectories
 

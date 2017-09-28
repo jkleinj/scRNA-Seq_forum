@@ -51,67 +51,98 @@ Introduction
 ```
 Design and computational analysis of single-cell RNA-sequencing experiments.
 Rhonda Bacher and Christina Kendziorski, Genome Biology 17 (2016) 63.
-DOI 10.1186
+```
+```
+The Technology and Biology of Single-Cell RNA Sequencing.
+Kolodziejczyk et al., Molecular Cell 58 (2015) 610.
 ```
 </small>
 
 ***
 
-## Spatio-temporal and Lineage-specific Mapping
+## Lineage-specific Mapping and (Pseudo-)Time Reconstruction
 <img src="fig/Z_A_PCA.png" title="ENS cells" width="800px" />
 
 
-scRNA-Seq Post-processing: Alignment
+RNA-Seq Data Pipeline
 ========================================================
-- Output of scRNA-Seq run: short (50-100 n) transcript reads in fastq files
-- Reference (human, mouse, ) genome or transcriptome: fasta sequence + annotation (UCSC, ENSEMBL, )
-- Alignment of transcript reads with reference genome or transcriptome
-- Hisat2 (genome), STAR (genome), Kallisto (transcriptome), ...
-- Alignment with spike-ins (important for normalisation): create 'spikeIn-ome'
-- Transcript counts created by aligner or second program (featureCounts from the subread package)
-- Gene names in R from org.Hs.eg.db or org.Mm.eg.db library
+## Prerequisites
+* Aligner
+* Reference genome or transcriptome; ERCC92 references
+* Single-cell RNA-Seq transcript reads
+
+## Alignment
+* Align each sample (cell) on cluster or local computer
+* Count transcripts
+* Log alignment success
+* Merge all samples into one result table (transcript counts)
+
+## Quality Check
+* Quality-check all samples
+
+## Normalisation
+* Normalise samples and batches
+
+## Analysis
+* Create PCA and tSNE plots
+* Analyse differential gene expression
 
 
-Quality Control and Normalisation
+Quality Control
 ========================================================
 - Check the distribution of read counts
 - Remove all cells with 'total transcript counts < cut-off'
   (~50000, but other methods might have lower counts)
-- Remove all genes with less than 5 counts in 2 samples
-- Normalise via design matrix to remove batch effects
-- Upper quartile or quantile normalisation (RUVSeq -> DESeq2)
-- In difficult cases, more sophisticated normalisation might be required
+- Remove all genes with less than 5 counts in 5 samples
+- Number of remaining genes >5000?
+- <10% of transcripts map to mitochondrial genes
+
+
+Quality Control Example
+========================================================
+
+
+
+========================================================
+![plot of chunk unnamed-chunk-2](scRNAseq_forum-figure/unnamed-chunk-2-1.png)
+
+![plot of chunk unnamed-chunk-3](scRNAseq_forum-figure/unnamed-chunk-3-1.png)
+***
+![plot of chunk unnamed-chunk-4](scRNAseq_forum-figure/unnamed-chunk-4-1.png)
+
+<img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
+<small>
+Bacher et al., Nature Methods 14 (2017) 584.
+</small>
+
+
+Normalisation Example
+========================================================
+
+
+
+
+Latent Factors
+========================================================
+
 
 
 (Semi-)Supervised Analysis
 ========================================================
 - Currently there is no fully automated analysis of biological processes!
-  We can map GO terms, pathways, gene modules and more,
-  but the understanding comes from the Biology <=> Bioinformatics exchange.
-  Make a Bioinformatician your friend (chocolate helps, a beer as well).
+  We can map to GO terms, pathways, gene modules and more,
+  but the understanding comes from the exchange: Biology <=> Bioinformatics.
+  Be nice to Bioinformaticians (chocolate helps)!
   
 1. Differential gene expression
   (contrast between pairs of design groups)
-  - two-dimensional clustering
-  - gene lists through correlation or regression models
+  - two-dimensional clustering (heatmap)
+  - gene lists via correlation or regression models
+
+
 2. Analysis of the covariance matrix
-  - PCA, tSNE, SVD
+  - PCA, tSNE
   - Latent factor analysis (scLVM, scran)
   - Pseudo-time as latent factor (Monocle, Wanderlust, DeLorean)
-  - Branching trajectories: software emerging this year
-
-
-Reviews
-========================================================
-- Alignment Methods
-- Normalisation
-- Other
-
-
-Software
-========================================================
-- Aligners
-- Normalisation
-- Latent factor decomposition
-- Pseudo-time modelling
+  - Branching trajectories
 
