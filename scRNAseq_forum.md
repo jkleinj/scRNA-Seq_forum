@@ -1,38 +1,76 @@
 
 scRNA-Seq Forum
 ========================================================
-date: 07.2017
-author: Jens Kleinjung
-autosize: true
+date: 29.07.2017
+author: Jens Kleinjung, jens.kleinjung@crick.ac.uk
+width: 1920
+height: 1080
+font-family: 'Helvetica'
+navigation: slide
+transition: none
 transition: rotate
 transition-speed: slow
-incremental: true
+#incremental: true
 
 [https://github.com/jkleinj/scRNA-Seq_forum](https://github.com/jkleinj/scRNA-Seq_forum)
 
-[https://www.keystonesymposia.org/17e3](https://www.keystonesymposia.org/17e3)
 
-
-Overview
+Programme
 ========================================================
-1. Reena Lasrado: single cells from tissue
-2. Andreas Sagner: single cells from culture
-3. ? : processing of single cells in the NGS facility
-4. Julien Delile : pseudo-temporal and large-scale analysis of single cell trajectories
-5. Jens Kleinjung : alignment, normalisation and (semi-)supervised analysis of single cell data
+
+```
+15:00 Introduction
+```
+
+- 15:05 Sample preparation from tissue. *Reena Lasrado*
+- 15:20 Sample preparation from culture. *Andreas Sagner*
+- 15:35 Sequencing of single-cell samples. *Marta Costa*
+
+```
+15:50 Break
+```
+
+- 16:00 10X Genomics. *Scott Brouilette*
+- 16:15 Post-processing of single-cell RNA-Seq data. *Jens Kleinjung*
+- 16:30 Pseudo-time analysis and lineage reconstruction. *Julien Delile*
+
+```
+- 16:45 Discussion
+- 17:00 Refreshments, kindly sponsored by 10X Genomics
+```
 
 
-scRNA-Seq Alignment
+Introduction
 ========================================================
-- zero, one or two cells
-- Alignment of RNA-Seq (fastq) transcripts against reference -ome
-- -ome: fasta sequence + annotation
-- Tophat2 (genome), Salmon (transcriptome), ...
-- Human (ENSEMBL:) and Mouse (ENSEMBL:)
-- alignment against spike-ins (important for normalisation)
-- create 'spikeIn-ome'
-- Transcript counts created by aligner or second program (featureCounts)
-- gene names from org.db?
+## Single-cell RNA-Seq Publications
+
+![plot of chunk unnamed-chunk-1](scRNAseq_forum-figure/unnamed-chunk-1-1.png)
+
+<small>
+[Keystone Symposia: Single Cell Omics (E3)](https://www.keystonesymposia.org/17e3)
+```
+Design and computational analysis of single-cell RNA-sequencing experiments.
+Rhonda Bacher and Christina Kendziorski, Genome Biology 17 (2016) 63.
+DOI 10.1186
+```
+</small>
+
+***
+
+## Spatio-temporal and Lineage-specific Mapping
+<img src="fig/Z_A_PCA.png" title="ENS cells" width="800px" />
+
+
+scRNA-Seq Post-processing: Alignment
+========================================================
+- Output of scRNA-Seq run: short (50-100 n) transcript reads in fastq files
+- Reference (human, mouse, ) genome or transcriptome: fasta sequence + annotation (UCSC, ENSEMBL, )
+- Alignment of transcript reads with reference genome or transcriptome
+- Hisat2 (genome), STAR (genome), Kallisto (transcriptome), ...
+- Alignment with spike-ins (important for normalisation): create 'spikeIn-ome'
+- Transcript counts created by aligner or second program (featureCounts from the subread package)
+- Gene names in R from org.Hs.eg.db or org.Mm.eg.db library
+
 
 Quality Control and Normalisation
 ========================================================
