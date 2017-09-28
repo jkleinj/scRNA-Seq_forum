@@ -103,8 +103,18 @@ Quality Control
 
 Quality Control Example
 ========================================================
+```{r, eval = TRUE, echo = FALSE}
+dat.raw = read.table("dat/060.genali.assemble", header = TRUE);
+dat = as.matrix(dat.raw[ , -1]);
+rownames(dat) = dat.raw[ , 1];
+print(dat[ , 10:19]);
+```
 
-
+```{r, eval = TRUE, echo = FALSE}
+cell.sum = as.matrix(apply(dat[ , 10:19], 2, sum));
+colnames(cell.sum) = c("Total read counts ");
+print(t(cell.sum));
+```
 
 ========================================================
 ```{r, eval = TRUE, echo = FALSE}
@@ -137,6 +147,11 @@ ggtitle("Per-sample sequencing depth") +
   theme(title = element_text(size = 22), axis.text = element_text(size = 18), axis.title = element_text(size = 18));
 ```
 
+<img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
+<small>
+Bacher et al., Nature Methods 14 (2017) 584.
+</small>
+***
 ```{r, eval = TRUE, echo = FALSE}
 library(ggplot2);
 ## create synthetic expression data for 6 cells
@@ -166,10 +181,10 @@ ggplot() +
 geom_crossbar(data = df, aes(x = cell, ymin = expr, ymax = expr, y = expr, colour = cell)) +
 ylab("log(expr)") +
 scale_x_continuous(breaks = c(1,2,3,4,5,6), labels = c("cell1", "cell2", "cell3", "cell4", "cell5", "cell6")) +
-ggtitle("Differential Gene Expression") +
+ggtitle("Differential gene expression") +
 theme(title = element_text(size = 22), axis.text = element_text(size = 18), axis.title = element_text(size = 18));
 ```
-***
+
 ```{r, eval = TRUE, echo = FALSE}
 library(ggplot2);
 ## create synthetic expression data for 6 cells
@@ -215,10 +230,19 @@ Bacher et al., Nature Methods 14 (2017) 584.
 </small>
 
 
-Normalisation Example
+Normalisation Example: SCnorm
 ========================================================
+<img src="fig/SCnorm_k1.png" title="SCnorm k1" width="500px" />
+***
+<img src="fig/SCnorm_k16.png" title="SCnorm k16" width="500px" />
 
 
+Normalisation Example: RUVSeq
+========================================================
+<img src="fig/plot.RLE.raw.png" title="RLE raw" width="500px" />
+<img src="fig/plot.RLE.bln.png" title="RLE raw" width="500px" />
+***
+<img src="fig/plot.RLE.RUVr.png" title="RLE raw" width="500px" />
 
 
 Latent Factors

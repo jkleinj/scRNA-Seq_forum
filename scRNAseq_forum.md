@@ -101,14 +101,51 @@ Quality Control
 Quality Control Example
 ========================================================
 
+```
+                    A11   A12  B01 B02  B03  B06  B09  B10  B11   B12
+ENSMUSG00000000001  559     1   90   5    6  132  596  902 1072  3361
+ENSMUSG00000000003    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000028    0     0    0   0    0    0    2   41  145     1
+ENSMUSG00000000031    3   169 1247   5   50 1824   75  515  848  7280
+ENSMUSG00000000037    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000049    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000056    1     6    2   0 2908    3  614    0    1     0
+ENSMUSG00000000058    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000078   22    21  107   0  725 1237  211  161 1517     5
+ENSMUSG00000000085    6     3    0   3   32   53    1    0   23   878
+ENSMUSG00000000088   62    12  111   0   75  115  196  173   20     1
+ENSMUSG00000000093  198     0    0   0    0   17    0    0   56     0
+ENSMUSG00000000094    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000103    0     0    0   0    0    0    0    0    0     0
+ENSMUSG00000000120    8   247   40   0    1   84   16    8    5     2
+ERCC-00158            0     0    0   0    0    0    0    0    0     0
+ERCC-00160            2     1    1   1  573    8    1    2    0     0
+ERCC-00162           22   579   49   0  114    0    3    0   13   337
+ERCC-00163            0   578    0   0    0   19   31    1    0    48
+ERCC-00164            0     0    0   0    0    0    0    0    0     0
+ERCC-00165          752   602    0   0    0  115   65  397    3     1
+ERCC-00168            0     0    0   0    0    0    0    0    0     0
+ERCC-00170           78     1    0   0   23    2    0    0    0     0
+ERCC-00171         8092 16075 3142  36 5457 2331 3879 5551 2468 18893
+```
 
+
+```
+                    A11   A12  B01 B02  B03  B06  B09  B10  B11   B12
+Total read counts  9805 18295 4789  50 9964 5940 5690 7751 6171 30807
+```
 
 ========================================================
-![plot of chunk unnamed-chunk-2](scRNAseq_forum-figure/unnamed-chunk-2-1.png)
-
-![plot of chunk unnamed-chunk-3](scRNAseq_forum-figure/unnamed-chunk-3-1.png)
-***
 ![plot of chunk unnamed-chunk-4](scRNAseq_forum-figure/unnamed-chunk-4-1.png)
+
+<img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
+<small>
+Bacher et al., Nature Methods 14 (2017) 584.
+</small>
+***
+![plot of chunk unnamed-chunk-5](scRNAseq_forum-figure/unnamed-chunk-5-1.png)
+
+![plot of chunk unnamed-chunk-6](scRNAseq_forum-figure/unnamed-chunk-6-1.png)
 
 <img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
 <small>
@@ -116,10 +153,19 @@ Bacher et al., Nature Methods 14 (2017) 584.
 </small>
 
 
-Normalisation Example
+Normalisation Example: SCnorm
 ========================================================
+<img src="fig/SCnorm_k1.png" title="SCnorm k1" width="500px" />
+***
+<img src="fig/SCnorm_k16.png" title="SCnorm k16" width="500px" />
 
 
+Normalisation Example: RUVSeq
+========================================================
+<img src="fig/plot.RLE.raw.png" title="RLE raw" width="500px" />
+<img src="fig/plot.RLE.bln.png" title="RLE raw" width="500px" />
+***
+<img src="fig/plot.RLE.RUVr.png" title="RLE raw" width="500px" />
 
 
 Latent Factors
