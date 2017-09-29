@@ -10,7 +10,7 @@ navigation: slide
 transition: none
 transition: rotate
 transition-speed: slow
-#incremental: true
+incremental: true
 
 [https://github.com/jkleinj/scRNA-Seq_forum](https://github.com/jkleinj/scRNA-Seq_forum)
 
@@ -88,14 +88,21 @@ RNA-Seq Data Pipeline
 * Analyse differential gene expression
 
 
-Quality Control
+Quality Control and Normalisation
 ========================================================
+## Quality Control
 - Check the distribution of read counts
 - Remove all cells with 'total transcript counts < cut-off'
   (~50000, but other methods might have lower counts)
 - Remove all genes with less than 5 counts in 5 samples
 - Number of remaining genes >5000?
 - <10% of transcripts map to mitochondrial genes
+
+## Normalisation
+- Dispersion of transcript counts is a result of biological variation and technical noise
+- The challenge of (sc)RNA-Seq normalisation is to remove only the technical noise
+- Incomplete normalisation leads to false signals in differential expression analysis
+- Excessive normalisation reduces or removes the biological signal
 
 
 Quality Control Example
@@ -186,7 +193,6 @@ Latent Factors
   Be nice to us Bioinformaticians (chocolate helps), you still need us!
 
 ## Differential gene expression
-  (contrast between pairs of design groups)
   - two-dimensional clustering (heatmap)
   - gene lists via correlation or regression models
 
@@ -203,4 +209,19 @@ Latent Factors
 <img src="fig/Gbars.Tubb3.cutoff.png" title="gene bars" width="300px" />
 ***
 <img src="fig/PCA_KO_1_7x7.png" title="PCA" width="500px" />
+
+```
+Lineage-dependent spatial and functional organization of the mammalian enteric nervous system.
+Lasrado, ..., Pachnis (2017) Science 356, 722-726.
+```
+```
+Genome editing reveals a role for OCT4 in human embryogenesis.
+Fogarty, ..., Niakan (Sep. 2017) Nature.
+```
+```
+A Gene Regulatory Network Balances Neural and Mesoderm Specification during Vertebrate Trunk Development.
+Gouti, ..., Briscoe (2017) Dev. Cell 41, 243.
+```
+
+
 
