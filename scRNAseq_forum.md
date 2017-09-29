@@ -17,7 +17,7 @@ incremental: true
 
 Programme
 ========================================================
-
+incremental: false
 ```
 15:00 Introduction
 ```
@@ -42,6 +42,7 @@ Programme
 
 Introduction
 ========================================================
+incremental: true
 ## Single-cell RNA-Seq Publications
 
 ![plot of chunk unnamed-chunk-1](scRNAseq_forum-figure/unnamed-chunk-1-1.png)
@@ -66,6 +67,7 @@ Kolodziejczyk et al., Molecular Cell 58 (2015) 610.
 
 RNA-Seq Data Pipeline
 ========================================================
+incremental: false
 ## Prerequisites
 * Aligner
 * Reference genome or transcriptome; ERCC92 references
@@ -90,6 +92,7 @@ RNA-Seq Data Pipeline
 
 Quality Control and Normalisation
 ========================================================
+incremental: true
 ## Quality Control
 - Check the distribution of read counts
 - Remove all cells with 'total transcript counts < cut-off'
@@ -107,6 +110,7 @@ Quality Control and Normalisation
 
 Quality Control Example
 ========================================================
+incremental: false
 
 ```
                     A11   A12  B01 B02  B03  B06  B09  B10  B11   B12
@@ -143,6 +147,7 @@ Total read counts  9805 18295 4789  50 9964 5940 5690 7751 6171 30807
 ```
 
 ========================================================
+incremental: true
 ![plot of chunk unnamed-chunk-4](scRNAseq_forum-figure/unnamed-chunk-4-1.png)
 
 <img src="fig/SCnorm1.png" title="SCnorm 1" width="400px" />
@@ -162,6 +167,7 @@ Bacher et al., Nature Methods 14 (2017) 584.
 
 Normalisation Example: SCnorm
 ========================================================
+incremental: true
 <img src="fig/SCnorm_k1.png" title="SCnorm k1" width="500px" />
 ***
 <img src="fig/SCnorm_k16.png" title="SCnorm k16" width="500px" />
@@ -169,6 +175,7 @@ Normalisation Example: SCnorm
 
 Normalisation Example: RUVSeq
 ========================================================
+incremental: true
 <img src="fig/plot.RLE.raw.png" title="RLE raw" width="500px" />
 <img src="fig/plot.RLE.bln.png" title="RLE raw" width="500px" />
 ***
@@ -177,6 +184,7 @@ Normalisation Example: RUVSeq
 
 Latent Factors
 ========================================================
+incremental: true
 <img src="fig/cellcycleplot.png" title="cell cycle" width="800px" />
 
 ***
@@ -187,6 +195,7 @@ Latent Factors
 
 (Semi-)Supervised Analysis
 ========================================================
+incremental: true
 - Currently there is no fully automated analysis of biological processes!
   We can map to GO terms, pathways, gene modules and more,
   but the understanding comes from the exchange: Biology <=> Bioinformatics.
@@ -204,6 +213,7 @@ Latent Factors
 
 
 ========================================================
+incremental: true
 <img src="fig/heatmap_key.png" title="heatmap" width="650px" />
 <img src="fig/biplot_semisuperv.png" title="biplot" width="500px" />
 <img src="fig/Gbars.Tubb3.cutoff.png" title="gene bars" width="300px" />
@@ -224,4 +234,8 @@ Gouti, ..., Briscoe (2017) Dev. Cell 41, 243.
 ```
 
 
+MA plot
+========================================================
+incremental: false
+<img src="fig/MA_plot.png" title="MA plot" width="800px" />
 
